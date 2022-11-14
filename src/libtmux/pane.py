@@ -354,6 +354,13 @@ class Pane(TmuxMappingObject):
             raise exc.LibTmuxException(f"Pane not found: {self}")
         return pane
 
+    def kill_pane(self) -> None:
+        """``$ tmux kill-pane``."""
+        proc = self.cmd("kill-pane")
+
+        if proc.stderr:
+            raise exc.LibTmuxException(proc.stderr)
+
     def __repr__(self) -> str:
         return "{}({} {})".format(
             self.__class__.__name__, self.get("pane_id"), self.window
